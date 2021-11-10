@@ -1,5 +1,7 @@
 from pathlib import Path
 import os
+
+from scipy.sparse import data
 from features.build_features import Features
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
@@ -12,7 +14,9 @@ def dataset_split(path):
     dataset = features.build_features()
 
     target = dataset['last_measure']
-    features = dataset.drop(['key','measure_count','last_measure'], axis=1)
+    #features = dataset.drop(['last_measure'], axis=1)
+    features = dataset[['first_measure',
+        'measure_time_diff','heat_count','mean_power_ratio']]
 
     X_train, X_test, y_train, y_test = train_test_split(
         features, target, test_size=0.2, random_state=127)
@@ -33,6 +37,3 @@ def train():
     print('Test MAE:', mean_absolute_error(y_test, predict))
     print('Test R2:', r2_score(y_test, predict))
     joblib.dump(model,MODEL_DIR)
-
-#if __name__ == "__main__":
-#    main()

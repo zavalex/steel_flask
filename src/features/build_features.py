@@ -61,9 +61,9 @@ class Features:
         self.dataset = self.dataset[self.dataset['first_measure']!=self.dataset['last_measure']]
         
         #remove parameteres with high corr coefficient
-        self.dataset = self.dataset.drop(['bulk_9', 'active_power_sum', 'reactive_power_sum'],axis=1)
+        self.dataset = self.dataset.drop(['bulk_9', 'active_power_sum', 'reactive_power_sum','key','measure_count',
+            'wire_5', 'bulk_8', 'bulk_2','bulk_13','bulk_5', 'wire_8', 'wire_9'],axis=1)
         DATASET_PATH = os.path.join(self.path, 'processed\dataset.csv')
-        #print(DATASET_PATH)
-        #self.dataset.to_csv(index=False, path_or_buf=DATASET_PATH)
+        self.dataset.to_csv(index=False, path_or_buf=DATASET_PATH)
 
         return self.dataset
